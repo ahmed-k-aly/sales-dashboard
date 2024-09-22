@@ -33,6 +33,8 @@ app.add_middleware(
 
 class ProductSale(BaseModel):
     product: str
+    category: str
+    quantity: Optional[int]
     total_sales: float
 
     class Config:
@@ -59,9 +61,12 @@ def get_total_sales_per_product():
         # Query to get total sales per product
         query = select(
             products.c.name.label("product"),
+            categories.c.name.label("category"),
+            func.sum(sales.c.quantity).label("quantity"),
             func.sum(sales.c.total_sales).label("total_sales")
         ).join(products, sales.c.product_id == products.c.id)\
-         .group_by(products.c.name)\
+         .join(categories, sales.c.category_id == categories.c.id)\
+         .group_by(products.c.name, categories.c.name)\
          .order_by(func.sum(sales.c.total_sales).desc())  # Order by total sales in descending order
         
         results = session.execute(query).fetchall()
@@ -70,6 +75,8 @@ def get_total_sales_per_product():
         product_sales_list = [
             ProductSale(
                 product=row.product,
+                category=row.category,
+                quantity=row.quantity,
                 total_sales=row.total_sales
             )
             for row in results
