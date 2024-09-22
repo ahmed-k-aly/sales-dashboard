@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.json",
+  "references": [{ "path": "./tsconfig.app.json" }],
+  "compilerOptions": {
+    "target": "ESNext",
+    "composite": true,
+    "skipLibCheck": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowSyntheticDefaultImports": true,
+    "noEmit": false  // Enable emit in this config
+  },
+  "include": ["./vite.config.js"]
+}
