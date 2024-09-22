@@ -22,7 +22,16 @@ const options = {
       opacity: 0.1,
     },
     toolbar: {
-      show: false,
+      show: true,
+      tools: {
+        download: false,
+        selection: false,
+        zoom: true,
+        zoomin: true,
+        zoomout: true,
+        pan: false,
+        reset: true,
+      },
     },
   },
   responsive: [
@@ -108,7 +117,7 @@ interface ChartOneState {
   }[];
 }
 
-const ChartOne: React.FC = () => {
+const SalesChart: React.FC = () => {
   const [state, setState] = useState<ChartOneState>({
     series: [
       {
@@ -194,5 +203,5 @@ const ChartOne: React.FC = () => {
   );
 };
 
-export default ChartOne;
+export default SalesChart;
 
