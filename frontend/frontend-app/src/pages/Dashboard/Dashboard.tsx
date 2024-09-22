@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import CardDataStats from '../../components/CardDataStats';
 import SalesTable from '../../components/Tables/SalesTable';
 import SalesChart from '../../components/Charts/SalesChart';
-import { DaySale, ProductTotalSales, Sale, fetchDailySales,  fetchTotalSalesPerProduct } from '../../api';
+import { DaySale, Product, fetchDailySales,  fetchTotalSalesPerProduct } from '../../api';
+import Loader from '../../common/Loader';
 
 const Dashboard: React.FC = () => {
   // get total sales
-  const [salesData, setSalesData] = useState<ProductTotalSales[]>([]);
+  const [salesData, setSalesData] = useState<Product[]>([]);
   const [dailySalesData, setDailySalesData] = useState<DaySale[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -41,19 +42,19 @@ const Dashboard: React.FC = () => {
     getDailySales();
   }, []);
 
-  if (loading) return <p>Loading sales data...</p>;
+  if (loading) return <Loader />;
   if (error) return <p>{error}</p>;
 
   // filter out any product that has total sales less than 0
   const filteredSalesData = salesData.filter((sale) => sale.total_sales >= 0);
 
   // get most selling product by total sales
-  const mostSellingProduct: ProductTotalSales = filteredSalesData
+  const mostSellingProduct: Product = filteredSalesData
     .sort((a, b) => b.total_sales - a.total_sales)
     .slice(0, 1)[0];
 
   // get least selling product by total sales
-  const leastSellingProduct: ProductTotalSales = filteredSalesData
+  const leastSellingProduct: Product = filteredSalesData
     .sort((a, b) => a.total_sales - b.total_sales)
     .slice(0, 1)[0];
 
@@ -133,7 +134,7 @@ const Dashboard: React.FC = () => {
             />
           </svg>
         </CardDataStats>
-        <CardDataStats title="Best Selling Day" total={bestSellingDate.date} rate={"$"+bestSellingDate.total_sales.toString()} levelUp>
+        <CardDataStats title="Best Selling Day" total={bestSellingDate?.date} rate={"$"+bestSellingDate?.total_sales.toString()} levelUp>
           <svg
             className="fill-primary dark:fill-white"
             width="22"
