@@ -38,11 +38,10 @@ const Profile = () => {
                 About Me
               </h4>
               <p className="mt-4.5">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Pellentesque posuere fermentum urna, eu condimentum mauris
-                tempus ut. Donec fermentum blandit aliquet. Etiam dictum dapibus
-                ultricies. Sed vel aliquet libero. Nunc a augue fermentum,
-                pharetra ligula sed, aliquam lacus.
+              Hi there! I'm Ahmed Aly, a full-stack developer with a strong focus on building scalable web applications and optimizing data systems. 
+              My experience spans both frontend and backend technologies, including frameworks like NextJS, Prisma, and PostgreSQL. 
+              I enjoy working with data, from designing efficient databases to leveraging analytical tools to drive insights. 
+              Beyond coding, I love playing and watching soccer!
               </p>
             </div>
 
