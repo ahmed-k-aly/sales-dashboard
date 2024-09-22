@@ -19,8 +19,10 @@ export interface DaySale {
   total_sales: number;
 }
 
-export interface ProductTotalSales {
+export interface Product {
   product: string;
+  category?: string;
+  quantity?: number;
   total_sales: number;
 }
 
@@ -44,9 +46,9 @@ export const fetchProductSales = async (): Promise<Sale[]> => {
 };
 
 // Fetch total sales per product
-export const fetchTotalSalesPerProduct = async (): Promise<ProductTotalSales[]> => {
+export const fetchTotalSalesPerProduct = async (): Promise<Product[]> => {
   try {
-    const response = await api.get<ProductTotalSales[]>('/sales/total_per_product');
+    const response = await api.get<Product[]>('/sales/total_per_product');
     return response.data;
   } catch (error) {
     console.error('Error fetching total sales per product:', error);
