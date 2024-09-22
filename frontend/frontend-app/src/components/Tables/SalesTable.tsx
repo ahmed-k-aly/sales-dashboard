@@ -1,11 +1,25 @@
 import { useEffect, useState } from 'react';
-import {  fetchTotalSalesPerProduct, ProductTotalSales } from '../../api';  // Import the fetchProductSales function
+import {  fetchTotalSalesPerProduct, Product } from '../../api';  // Import the fetchProductSales function
+import ProductModal from '../ProductModal';  // Import the modal component
 
 const SalesTable = () => {
-  const [salesData, setSalesData] = useState<ProductTotalSales[]>([]);
+  const [salesData, setSalesData] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [showModal, setShowModal] = useState(false);
+
+  const handleProductClick = (product: Product) => {
+    setSelectedProduct(product);
+    setShowModal(true);
+  };
+
+  // Handle closing the modal
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setSelectedProduct(null);
+  };
   useEffect(() => {
     const getSalesData = async () => {
       try {
@@ -69,10 +83,30 @@ const SalesTable = () => {
                 </p>
               </div>
 
+              <div className="flex items-center justify-center p-2.5 xl:p-5">
+                <button
+                  className="text-primary"
+                  onClick={() => handleProductClick(sale)}
+                >
+                  View Details
+                </button>
+              </div>
+
             </div>
           ))}
+          
         </div>
+        {showModal && selectedProduct && (
+        <ProductModal
+          product={selectedProduct.product}
+          totalSales={selectedProduct.total_sales}
+          category={selectedProduct.category}
+          quantity={selectedProduct.quantity}
+          onClose={handleCloseModal}
+        />
+      )}
     </div>
+    
   );
 };
 
