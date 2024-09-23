@@ -46,9 +46,9 @@ export const fetchProductSales = async (): Promise<Sale[]> => {
 };
 
 // Fetch total sales per product
-export const fetchTotalSalesPerProduct = async (): Promise<Product[]> => {
+export const fetchProduct = async (): Promise<Product[]> => {
   try {
-    const response = await api.get<Product[]>('/sales/total_per_product');
+    const response = await api.get<Product[]>('/sales/product');
     return response.data;
   } catch (error) {
     console.error('Error fetching total sales per product:', error);

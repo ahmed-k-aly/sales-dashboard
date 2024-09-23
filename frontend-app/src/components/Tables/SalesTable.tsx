@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import {  fetchTotalSalesPerProduct, Product } from '../../api';  // Import the fetchProductSales function
+import {  fetchProduct, Product } from '../../api';  // Import the fetchProductSales function
 import ProductModal from '../ProductModal';  // Import the modal component
 
 const SalesTable = () => {
@@ -23,7 +23,7 @@ const SalesTable = () => {
   useEffect(() => {
     const getSalesData = async () => {
       try {
-        const data = await fetchTotalSalesPerProduct();
+        const data = await fetchProduct();
         setSalesData(data);  // Set the fetched sales data
       } catch (err) {
         setError('Failed to fetch sales data');

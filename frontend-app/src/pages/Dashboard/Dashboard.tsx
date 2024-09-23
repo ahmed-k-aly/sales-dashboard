@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import CardDataStats from '../../components/CardDataStats';
 import SalesTable from '../../components/Tables/SalesTable';
 import SalesChart from '../../components/Charts/SalesChart';
-import { DaySale, Product, fetchDailySales,  fetchTotalSalesPerProduct } from '../../api';
+import { DaySale, Product, fetchDailySales,  fetchProduct } from '../../api';
 import Loader from '../../common/Loader';
 
 const Dashboard: React.FC = () => {
@@ -15,7 +15,7 @@ const Dashboard: React.FC = () => {
   useEffect(() => {
     const getSalesData = async () => {
       try {
-        const data = await fetchTotalSalesPerProduct();
+        const data = await fetchProduct();
         setSalesData(data);  // Set the fetched sales data
       } catch (err) {
         setError('Failed to fetch sales data');
