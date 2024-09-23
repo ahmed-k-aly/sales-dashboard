@@ -1,70 +1,151 @@
-# Getting Started with Create React App
+# Sales Dashboard Application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
 
-## Available Scripts
+This project is a full-stack web application that provides a detailed sales summary for an e-commerce platform. The application consists of three distinct components, each designed to handle a specific part of the system:
 
-In the project directory, you can run:
+1. **Backend**: A FastAPI service that serves as the API layer. It processes and serves sales data from a PostgreSQL database via RESTful endpoints.
+2. **Frontend**: A React-based web application that provides a user-friendly dashboard for visualizing the sales data. It consumes the backend API and displays data in the form of tables and charts.
+3. **Database**: A PostgreSQL instance that stores all sales-related data, including transactions, products, categories, and computed sales summaries.
 
-### `npm start`
+This project is designed to be scalable and easy to deploy, leveraging Docker for containerization, making it straightforward to run both locally and in production environments.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Project Structure
 
-### `npm test`
+The project is organized into three main directories, each handling a part of the system, along with Docker-related configuration files to tie everything together:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+sales-dashboard/ ├── backend/ # FastAPI backend service │ ├── app/ # The core FastAPI app and logic │ ├── Dockerfile # Dockerfile for the backend service │ └── requirements.txt # Python dependencies for the backend ├── frontend-app/ # React frontend application │ ├── src/ # React source code │ ├── Dockerfile # Dockerfile for the frontend service │ └── package.json # JavaScript dependencies for the frontend ├── docker-compose.yml # Docker Compose configuration to run the full stack └── README.md
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Features
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- **Backend (FastAPI)**: 
+  - Provides RESTful API endpoints to retrieve sales data by product and day.
+  - Includes robust data validation and error handling using Pydantic.
+  - Interfaces with a PostgreSQL database to persist and query sales data.
+  - Automatically calculates total sales for each product and transaction.
+  
+- **Frontend (React)**:
+  - Provides an interactive and responsive dashboard to display sales data.
+  - Fetches data from the backend via Axios and renders it in tables and charts.
+  - Users can filter data by product or date ranges.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- **Database (PostgreSQL)**:
+  - Stores all sales transaction data, including product, category, and quantity information.
+  - Provides the ability to query detailed transaction logs or summarized sales data.
+  - Designed for scalability and optimization in querying large datasets.
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Prerequisites
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+To run this project locally or in a production environment, you'll need the following tools installed:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- **Docker**: To containerize and run the services.
+- **Docker Compose**: To orchestrate multiple containers for the backend, frontend, and database services.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+You can install Docker and Docker Compose by following the instructions on their official websites:
 
-## Learn More
+- [Docker Installation Guide](https://docs.docker.com/get-docker/)
+- [Docker Compose Installation Guide](https://docs.docker.com/compose/install/)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Installation & Running Locally
 
-### Code Splitting
+### Step 1: Clone the Repository
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+First, clone the repository to your local machine:
 
-### Analyzing the Bundle Size
+```bash
+git clone https://github.com/ahmed-k-aly/sales-dashboard.git
+cd sales-dashboard
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Step 2: Build and Start the Backend Services
+Use Docker Compose to build and run all the services (backend and database) in containers:
 
-### Making a Progressive Web App
+```bash
+docker-compose up --build
+```
+This command will:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Build the Docker images for both the backend and frontend services.
+Start a PostgreSQL database container for storing sales data.
+Expose the backend on port 8000
+### Step 3: Start the Frontend Services
+```bash
+cd frontend-app
+npm run dev
+```
+This will expose the frontend on port 5173.
+### Step 3: Access the Application
+Once the services are up and running, you can access the following:
 
-### Advanced Configuration
+Frontend (React): Visit http://localhost:5173 to see the sales dashboard.
+Backend (FastAPI): Visit http://localhost:8000/docs to explore the backend API via the interactive Swagger documentation. Alternatively, you can run queries by running http://localhost:8000/sales/product or localhost:8000/sales/day
+Database (PostgreSQL): The PostgreSQL database is running locally on port 5432, and you can access it using any PostgreSQL client.
+## Detailed Service Breakdown
+### Backend Service (FastAPI)
+The backend is responsible for processing and serving sales data. It provides several key API endpoints for interacting with the sales database.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+#### Endpoints:
 
-### Deployment
+GET /sales/product: Retrieves total sales data grouped by product, with optional filtering by product name.
+GET /sales/day: Retrieves total sales data grouped by day, with optional filtering by specific dates or date ranges.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+#### Database Interaction:
 
-### `npm run build` fails to minify
+The backend interacts with a PostgreSQL database to store and query sales transactions. SQLAlchemy is used as the ORM (Object-Relational Mapper) to handle database operations.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+#### Key Technologies:
+
+FastAPI for serving the API.
+SQLAlchemy for interacting with the PostgreSQL database.
+Pydantic for data validation and serialization.
+
+### Frontend Service (React)
+The frontend is a modern React-based application that consumes the backend API and displays sales data via a dashboard.
+
+#### Key Features:
+
+Fetches product and daily sales data from the backend using Axios.
+Renders sales data in dynamic tables and visualizes it using charts (e.g., line charts for daily sales).
+Allows users to filter and explore the data interactively.
+
+#### Key Technologies:
+
+React for building the user interface.
+Axios for making API requests to the backend.
+Charting libraries for visualizing sales data.
+
+### PostgreSQL Database
+The PostgreSQL database stores all sales-related data, including product details, categories, and transaction logs.
+
+#### Database Schema:
+
+products: Stores product information.
+categories: Stores product categories.
+sales: Stores each sales transaction, linking to products and categories.
+
+#### Data Ingestion:
+
+The backend provides an ingestion script (ingest_csv.py) that loads sales data from a CSV file into the database. This script can be used to populate the database with initial data during development or testing.
+Deployment
+This project is designed to be easily deployable using Docker. 
+
+### Docker Container Issues:
+
+Run docker ps to see if all services (db, backend, frontend) are up and running.
+Use docker logs <container_name> to check the logs of individual containers for errors.
+Database Connection Issues:
+
+Ensure that PostgreSQL is running and that the connection details (username, password, database name) are correct.
+You can manually access the PostgreSQL database using psql to check if the tables and data are present.
+Frontend Not Loading:
+
+Ensure that the frontend service is running on port 5173. You can check this by visiting http://localhost:5173 in your browser.
+If you encounter any issues with API requests, ensure that the backend is running and that the frontend is correctly configured to point to the backend API.
