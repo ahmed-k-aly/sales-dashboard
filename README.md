@@ -79,6 +79,7 @@ Expose the backend on port 8000
 ### Step 3: Start the Frontend Services
 ```bash
 cd frontend-app
+npm install
 npm run dev
 ```
 This will expose the frontend on port 5173.
