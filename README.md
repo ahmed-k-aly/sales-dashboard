@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project is a full-stack web application that provides a detailed sales summary for an e-commerce platform. The application consists of three distinct components, each designed to handle a specific part of the system:
+This project is a full-stack web application that provides a detailed sales summary for a sales dashboard. The application consists of three distinct components, each designed to handle a specific part of the system:
 
 1. **Backend**: A FastAPI service that serves as the API layer. It processes and serves sales data from a PostgreSQL database via RESTful endpoints.
 2. **Frontend**: A React-based web application that provides a user-friendly dashboard for visualizing the sales data. It consumes the backend API and displays data in the form of tables and charts.
