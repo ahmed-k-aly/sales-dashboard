@@ -16,7 +16,11 @@ This project is designed to be scalable and easy to deploy, leveraging Docker fo
 
 The project is organized into three main directories, each handling a part of the system, along with Docker-related configuration files to tie everything together:
 
-sales-dashboard/ ├── backend/ # FastAPI backend service │ ├── app/ # The core FastAPI app and logic │ ├── Dockerfile # Dockerfile for the backend service │ └── requirements.txt # Python dependencies for the backend ├── frontend-app/ # React frontend application │ ├── src/ # React source code │ ├── Dockerfile # Dockerfile for the frontend service │ └── package.json # JavaScript dependencies for the frontend ├── docker-compose.yml # Docker Compose configuration to run the full stack └── README.md
+sales-dashboard/ 
+├── backend/ # FastAPI backend service │ # The core FastAPI app and logic │ └── requirements.txt # Python dependencies for the backend 
+├── frontend-app/ # React frontend application │ ├── src/ # React source code │ └── package.json # JavaScript dependencies for the frontend 
+├── Dockerfile # Dockerfile for the services │  
+├── docker-compose.yml # Docker Compose configuration to run the full stack └── README.md
 
 ---
 
@@ -24,13 +28,13 @@ sales-dashboard/ ├── backend/ # FastAPI backend service │ ├── app/
 
 - **Backend (FastAPI)**: 
   - Provides RESTful API endpoints to retrieve sales data by product and day.
-  - Includes robust data validation and error handling using Pydantic.
+  - Includes data validation and error handling using Pydantic.
   - Interfaces with a PostgreSQL database to persist and query sales data.
   - Automatically calculates total sales for each product and transaction.
   
 - **Frontend (React)**:
   - Provides an interactive and responsive dashboard to display sales data.
-  - Fetches data from the backend via Axios and renders it in tables and charts.
+  - Fetches data from the backend via _Axios_ and renders it in tables and charts.
   - Users can filter data by product or date ranges.
 
 - **Database (PostgreSQL)**:
@@ -86,17 +90,17 @@ This will expose the frontend on port 5173.
 ### Step 3: Access the Application
 Once the services are up and running, you can access the following:
 
-Frontend (React): Visit http://localhost:5173 to see the sales dashboard.
-Backend (FastAPI): Visit http://localhost:8000/docs to explore the backend API via the interactive Swagger documentation. Alternatively, you can run queries by running http://localhost:8000/sales/product or localhost:8000/sales/day
-Database (PostgreSQL): The PostgreSQL database is running locally on port 5432, and you can access it using any PostgreSQL client.
+**Frontend (React):** Visit http://localhost:5173 to see the sales dashboard.
+**Backend (FastAPI):** Visit http://localhost:8000/docs to explore the backend API via the interactive Swagger documentation. Alternatively, you can run queries by running http://localhost:8000/sales/product or localhost:8000/sales/day
+**Database (PostgreSQL):** The PostgreSQL database is running locally on port 5432, and you can access it using any PostgreSQL client.
 ## Detailed Service Breakdown
 ### Backend Service (FastAPI)
 The backend is responsible for processing and serving sales data. It provides several key API endpoints for interacting with the sales database.
 
 #### Endpoints:
 
-GET /sales/product: Retrieves total sales data grouped by product, with optional filtering by product name.
-GET /sales/day: Retrieves total sales data grouped by day, with optional filtering by specific dates or date ranges.
+**GET /sales/product:** Retrieves total sales data grouped by product, with optional filtering by product name.
+**GET /sales/day**: Retrieves total sales data grouped by day, with optional filtering by specific dates or date ranges.
 
 #### Database Interaction:
 
@@ -104,9 +108,9 @@ The backend interacts with a PostgreSQL database to store and query sales transa
 
 #### Key Technologies:
 
-FastAPI for serving the API.
-SQLAlchemy for interacting with the PostgreSQL database.
-Pydantic for data validation and serialization.
+**FastAPI** for serving the API.
+**SQLAlchemy** for interacting with the PostgreSQL database.
+**Pydantic** for data validation and serialization.
 
 ### Frontend Service (React)
 The frontend is a modern React-based application that consumes the backend API and displays sales data via a dashboard.
@@ -119,8 +123,8 @@ Allows users to filter and explore the data interactively.
 
 #### Key Technologies:
 
-React for building the user interface.
-Axios for making API requests to the backend.
+**React** for building the user interface.
+**Axios** for making API requests to the backend.
 Charting libraries for visualizing sales data.
 
 ### PostgreSQL Database
@@ -128,9 +132,9 @@ The PostgreSQL database stores all sales-related data, including product details
 
 #### Database Schema:
 
-products: Stores product information.
-categories: Stores product categories.
-sales: Stores each sales transaction, linking to products and categories.
+**products:** Stores product information.
+**categories:** Stores product categories.
+**sales:** Stores each sales transaction, linking to products and categories.
 
 #### Data Ingestion:
 
@@ -140,11 +144,11 @@ This project is designed to be easily deployable using Docker.
 
 ### Docker Container Issues:
 
-Run docker ps to see if all services (db, backend, frontend) are up and running.
+Run docker ps to see if all services (db, backend) are up and running.
 Use docker logs <container_name> to check the logs of individual containers for errors.
 Database Connection Issues:
 
-Ensure that PostgreSQL is running and that the connection details (username, password, database name) are correct.
+Ensure that PostgreSQL is running and that the connection details are correct.
 You can manually access the PostgreSQL database using psql to check if the tables and data are present.
 Frontend Not Loading:
 
