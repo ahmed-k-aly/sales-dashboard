@@ -1,15 +1,13 @@
 import os
 import pandas as pd
 import numpy as np
-import psycopg2
 from sqlalchemy import ForeignKey, create_engine, Column, Integer, String, Float, Date, text
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import relationship
-from datetime import datetime
 
 # Database setup
-DATABASE_URL = "postgresql://admin:password@localhost:5432/sales_db"
+DATABASE_URL="postgresql://admin:password@db:5432/sales_db"
 
 Base = declarative_base()
 
@@ -142,11 +140,14 @@ def ingest_csv(file_path):
         print("Data inserted/updated successfully!")
         session.close()
 
-if __name__ == "__main__":
-    # Initialize the database
+def ingest():
+ # Initialize the database
     init_db()
 
     # Ingest CSV data
     csv_file_path = os.path.join(os.path.dirname(__file__), 'sales_data.csv')
     ingest_csv(csv_file_path)
     print("CSV data ingested successfully!")
+
+if __name__ == "__main__":
+    ingest()
